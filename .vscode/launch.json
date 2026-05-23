@@ -1,0 +1,55 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Start Backend",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-backend",
+      "program": "${workspaceFolder}/backend/bin/Debug/net10.0/HexLabels.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/backend",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:5001;http://localhost:5000"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/backend"
+      }
+    },
+    {
+      "name": "Start Frontend",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "${workspaceFolder}/frontend",
+      "serverReadyAction": {
+        "pattern": "Local:.*http://localhost:([0-9]+)",
+        "uriFormat": "http://localhost:%s",
+        "action": "openExternally"
+      },
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Deploy Both",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "deploy"],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "deploy-all",
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Start Backend + Frontend",
+      "configurations": ["Start Backend", "Start Frontend"],
+      "stopAll": true
+    }
+  ]
+}

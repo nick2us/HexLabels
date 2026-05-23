@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-backend",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build", "${workspaceFolder}/backend/HexLabels.Api.csproj", "--configuration", "Debug"],
+      "problemMatcher": "$msCompile",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "publish-backend",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "publish",
+        "${workspaceFolder}/backend/HexLabels.Api.csproj",
+        "--configuration", "Release",
+        "--output", "${workspaceFolder}/backend/publish"
+      ],
+      "problemMatcher": "$msCompile",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "build-frontend",
+      "type": "shell",
+      "command": "npm run build",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "deploy-all",
+      "dependsOrder": "sequence",
+      "dependsOn": ["publish-backend", "build-frontend"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
