@@ -7,7 +7,9 @@
       "Bash(npm install *)",
       "Bash(mkdir -p /home/nick2us/snap/gitpeach-desktop/13/GitHub/HexLabels/.vscode)",
       "Bash(dotnet add *)",
-      "Bash(dotnet build *)"
+      "Bash(dotnet build *)",
+      "Bash(chmod +x /home/nick2us/snap/gitpeach-desktop/13/GitHub/HexLabels/deploy.sh)",
+      "Bash(bash -n /home/nick2us/snap/gitpeach-desktop/13/GitHub/HexLabels/deploy.sh)"
     ],
     "additionalDirectories": [
       "/home/nick2us/snap/gitpeach-desktop/13/GitHub/HexLabels"
