@@ -36,7 +36,7 @@ namespace HexLabels.Api
                 {
                     // Remove the version parameter from the operation
                     var versionParameter = operation.Parameters?.FirstOrDefault(p =>
-                        p.Name.Equals("version", StringComparison.OrdinalIgnoreCase));
+                      p.Name.Equals("version", StringComparison.OrdinalIgnoreCase));
 
                     if (versionParameter != null)
                     {

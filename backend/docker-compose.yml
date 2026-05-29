@@ -1,0 +1,16 @@
+services:
+  hexlabels:
+    image: localhost/hexlables
+    container_name: hexlabels
+    ports:
+      - "8080:8080" # HTTP
+      - "8081:8081" # HTTPS
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${ASPNET_CERT_PASSWORD}
+    volumes:
+      - ~/.aspnet/https:/https:z
+    restart: unless-stopped
