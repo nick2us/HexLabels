@@ -14,3 +14,28 @@ services:
     volumes:
       - ~/.aspnet/https:/https:z
     restart: unless-stopped
+  postgres:
+    image: postgres:18.4
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: toor321
+      POSTGRES_DB: hexlables
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/18/data
+  pgadmin:
+    image: dpage/pgadmin4:8.4
+    container_name: pgadmin_ui
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: toor321
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+volumes:
+  postgres_data:

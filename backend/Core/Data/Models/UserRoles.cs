@@ -23,6 +23,7 @@ namespace HexLabels.Api.Core.Data.Models
         public Guid UserRoleId { get; set; }
         public virtual required User User { get; set; }
         public virtual required Company Company { get; set; }
+        public virtual required Department Department { get; set; }
         public virtual required UserRoleTypes Role { get; set; }
 
     }

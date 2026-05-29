@@ -7,12 +7,12 @@ namespace HexLabels.Api.Core.Data.Contexts
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            // Database.EnsureCreated();
 
-            if (!Companies.Any())
-            {
-                SeedData();
-            }
+            // if (!Companies.Any())
+            // {
+            //     SeedData();
+            // }
         }
 
         public DbSet<Company> Companies => Set<Company>();
@@ -23,6 +23,7 @@ namespace HexLabels.Api.Core.Data.Contexts
 
         public DbSet<UserRoles> UserRoles => Set<UserRoles>();
 
+        public DbSet<Department> Departments => Set<Department>();
 
         public override int SaveChanges()
         {
@@ -56,10 +57,16 @@ namespace HexLabels.Api.Core.Data.Contexts
         private void SeedData()
         {
 
+            Department d = new()
+            {
+                ID = new Guid("3088589f-feef-4c02-8659-dff226de875a"),
+                Name = "Timisoara branch"
+            };
+
             Company c = new()
             {
                 ID = new Guid("958d223c-9ae3-4f9a-8989-51498c3ecc23"),
-                Name = "Superuser Company"
+                Name = "Superuser Company",
             };
 
             User u = new()
@@ -78,13 +85,16 @@ namespace HexLabels.Api.Core.Data.Contexts
             {
                 Company = c,
                 User = u,
+                Department = d,
                 Role = UserRoleTypes.Employee
             });
 
-            u.Companies.Add(c);
+            c.Departments.Add(d);
+            u.Departments.Add(d);
             APIKeys.Add(key);
             Companies.Add(c);
             Users.Add(u);
+            Departments.Add(d);
 
             SaveChanges();
         }

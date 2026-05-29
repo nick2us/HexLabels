@@ -29,6 +29,10 @@ namespace HexLabels.Api.Services
                 return Task.FromResult<IActionResult>(new UnauthorizedResult());
             }
 
+            if (validator.GetScopeSize() == 0)
+            {
+                return Task.FromResult<IActionResult>(new UnauthorizedResult());
+            }
 
             var claims = new List<Claim>
             {

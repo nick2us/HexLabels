@@ -4,14 +4,13 @@ using System.ComponentModel.DataAnnotations;
 namespace HexLabels.Api.Core.Data.Models
 {
 
-    public class CompanyNotFoundException(Guid? companyId) : NotFoundException($"Company {companyId} was not found.");
+    public class DepartmentNotFoundException(Guid? departmentId) : NotFoundException($"Department {departmentId} was not found.");
 
-    public class Company : BaseModel
+    public class Department : BaseModel
     {
         [Key]
         public Guid ID { get; set; }
         public string? Name { get; set; }
         public List<UserRoles> UserRoles { get; set; } = [];
-        public List<Department> Departments { get; set; } = [];
     }
 }

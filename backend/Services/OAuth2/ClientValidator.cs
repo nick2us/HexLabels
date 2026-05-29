@@ -18,6 +18,9 @@ namespace HexLabels.Api.Services.OAuth2
         private string[] Scope { get; set; } = scope;
 
         private Company? Company { get; set; }
+        private Department? Department { get; set; }
+
+        public int GetScopeSize() => Scope.Length;
 
         public void SetClaims(List<Claim> claims)
         {
@@ -27,20 +30,26 @@ namespace HexLabels.Api.Services.OAuth2
             }
             claims.Add(new Claim("user_id", ClientID.ToString()));
             claims.Add(new Claim("company_id", Company?.ID.ToString() ?? ""));
+            claims.Add(new Claim("department_id", Department?.ID.ToString() ?? ""));
         }
 
         public void Validate()
         {
 
-            User user = Database.Users.Include(u => u.UserRole).Where(u => u.ID == ClientID).FirstOrDefault() ?? throw new UserHasNoAccessException();
+            User user = Database.Users.Include(u => u.UserRole).Include(u => u.Departments).Where(u => u.ID == ClientID).FirstOrDefault() ?? throw new UserHasNoAccessException();
 
             ApiKey key = Database.APIKeys.Include(a => a.Company).Where(k => k.Key == ClientSecret).FirstOrDefault() ?? throw new UserHasNoAccessException();
 
             Company = key.Company ?? throw new CompanyNotFoundException(null);
 
             UserRoles ur = user.UserRole.Where(ur => ur.Company.ID == Company.ID).FirstOrDefault() ?? throw new UserHasNoAccessException();
+
+            Department = ur.Department ?? throw new DepartmentNotFoundException(null);
+
             Scope = Scopes.ValidScopes(Scope, ur.Role!);
 
         }
+
+
     }
 }

@@ -23,6 +23,6 @@ namespace HexLabels.Api.Core.Data.Models
         public UserFlags Flags { get; set; }
 
         public virtual List<UserRoles> UserRole { get; set; } = [];
-        public virtual List<Company> Companies { get; set; } = [];
+        public virtual List<Department> Departments { get; set; } = [];
     }
 }
