@@ -43,3 +43,4 @@ Thumbs.db
 *.sln
 *.sw?
 *.local
+.codegraph/**/*
