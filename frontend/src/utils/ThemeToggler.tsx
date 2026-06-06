@@ -14,10 +14,10 @@ export function ThemeToggler() {
   };
 
   return (
-    <div className="flex mr-2">
+    <div className="flex">
       <Button
         variant="secondary"
-        size="icon"
+        size="icon-sm"
         onClick={toggleTheme}
         className="relative rounded-full transition-transform"
       >

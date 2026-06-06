@@ -1,8 +1,7 @@
 import { ThemeToggler } from "@/utils/ThemeToggler";
-import { SidebarMenu, SidebarMenuItem, useSidebar } from "./ui/sidebar";
+import { SidebarMenu, SidebarMenuItem } from "./ui/sidebar";
 
 export default function NavUtils() {
-  const { isMobile } = useSidebar();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
