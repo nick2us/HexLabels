@@ -1,29 +1,14 @@
 import "./App.css";
-import { ApplicationContext } from "./data/contexts/ApplicationContext";
-import { Sidebar } from "./layout/Sidebar";
+import SessionManager from "./app/SessionManager";
+import { ApplicationContextProvider } from "./data/contexts/ApplicationContextProvider";
 import { ThemeProvider } from "./utils/ThemeProvider";
 function App() {
   return (
-    <ApplicationContext
-      value={{
-        user: null,
-        session: null,
-        profile: null,
-      }}
-    >
+    <ApplicationContextProvider>
       <ThemeProvider>
-        <Sidebar>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-              <div className="aspect-video rounded-xl bg-muted/50" />
-              <div className="aspect-video rounded-xl bg-muted/50" />
-              <div className="aspect-video rounded-xl bg-muted/50" />
-            </div>
-            <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-          </div>
-        </Sidebar>
+        <SessionManager />
       </ThemeProvider>
-    </ApplicationContext>
+    </ApplicationContextProvider>
   );
 }
 

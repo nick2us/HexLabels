@@ -1,13 +1,16 @@
 import { createContext } from "react";
 
-type ApplicationContextType = {
-  user: null;
-  session: null;
-  profile: null;
+export type Session = {
+  user?: null;
+  profile?: null;
+};
+export type SessionContextType = {
+  session?: Session;
+  setSession?: React.Dispatch<React.SetStateAction<Session>>;
 };
 
-export const ApplicationContext = createContext<ApplicationContextType>({
-  user: null,
-  session: null,
-  profile: null,
-});
+type ApplicationContextType = {
+  session?: SessionContextType | null;
+};
+
+export const ApplicationContext = createContext<ApplicationContextType>({});

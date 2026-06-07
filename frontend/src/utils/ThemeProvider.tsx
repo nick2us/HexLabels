@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, type PropsWithChildren } from "react";
 import { ThemeContext } from "./ThemeContext";
 
-export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
+export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
