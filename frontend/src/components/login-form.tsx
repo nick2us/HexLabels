@@ -8,11 +8,27 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { loginWithCognito } from "@/lib/login";
+import { Link } from "react-router";
 
-export function LoginForm({
+export default function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = async () => {
+    try {
+      const result = await loginWithCognito(email, password);
+
+      console.log(result);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -27,7 +43,14 @@ export function LoginForm({
               </div>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input id="email" type="email" placeholder="" required />
+                <Input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  id="email"
+                  type="email"
+                  placeholder=""
+                  required
+                />
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -39,13 +62,25 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  id="password"
+                  type="password"
+                  required
+                />
               </Field>
-              <Field>
-                <Button type="submit">Login</Button>
-              </Field>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSubmit();
+                }}
+                type="submit"
+              >
+                Login
+              </Button>
               <FieldDescription className="text-center">
-                Don&apos;t have an account? <a href="#">Sign up</a>
+                Don&apos;t have an account? <Link to="/signup">Sign up</Link>
               </FieldDescription>
             </FieldGroup>
           </form>

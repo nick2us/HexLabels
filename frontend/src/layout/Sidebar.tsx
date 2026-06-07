@@ -14,7 +14,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
-export function Sidebar({ children }: React.PropsWithChildren) {
+export default function Sidebar({ children }: React.PropsWithChildren) {
   return (
     <SidebarProvider>
       <AppSidebar />

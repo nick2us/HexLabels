@@ -1,0 +1,44 @@
+version: "3.8"
+
+networks:
+  ministack-net:
+    driver: bridge
+
+services:
+  ministack:
+    container_name: ministack
+    image: docker.io/ministackorg/ministack:full
+    ports:
+      - "4566:4566"
+    environment:
+      - MINISTACK_REGION=eu-central-1
+      # Optional: uncomment if you want to persist S3/Dynamo data between restarts
+      - MINISTACK_DATA_DIR=/data
+    volumes:
+      # Required if you plan to spin up local Lambda functions or ECS tasks via MiniStack
+      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock
+      # Optional: uncomment if enabling data persistence
+      - ministack-data:/data
+    networks:
+      - ministack-net
+
+  stackport:
+    container_name: stackport-ui
+    image: docker.io/davireis/stackport
+    ports:
+      - "63535:8080"
+    environment:
+      # Points the UI to the MiniStack container inside the Docker network
+      - AWS_ENDPOINT_URL=http://ministack:4566
+      - AWS_REGION=eu-central-1
+      - AWS_ACCESS_KEY_ID=mock_key
+      - AWS_SECRET_ACCESS_KEY=mock_secret
+      # Allows you to create/delete pools and buckets directly from the browser UI
+      - STACKPORT_ALLOW_WRITES=true
+    depends_on:
+      - ministack
+    networks:
+      - ministack-net
+
+volumes:
+  ministack-data:

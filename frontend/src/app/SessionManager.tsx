@@ -1,7 +1,11 @@
-import { LoginForm } from "@/components/login-form";
 import { ApplicationContext } from "@/data/contexts/ApplicationContext";
-import { Sidebar } from "@/layout/Sidebar";
-import { useContext, useMemo } from "react";
+import { lazy, Suspense, useContext, useMemo } from "react";
+import { Route, Routes } from "react-router";
+import Loader from "@/utils/Loader";
+
+const LoginForm = lazy(() => import("@/components/login-form"));
+const SignupForm = lazy(() => import("@/components/signup-form"));
+const Sidebar = lazy(() => import("@/layout/Sidebar"));
 
 export default function SessionManager() {
   const { session } = useContext(ApplicationContext);
@@ -45,11 +49,32 @@ function LoggedIn() {
 function LoggedOut() {
   return (
     <>
-      <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
-        <div className="w-full max-w-sm md:max-w-4xl">
-          <LoginForm />
-        </div>
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<Loader />}>
+              <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
+                <div className="w-full max-w-sm md:max-w-4xl">
+                  <LoginForm />
+                </div>
+              </div>
+            </Suspense>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Suspense fallback={<Loader />}>
+              <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
+                <div className="w-full max-w-sm md:max-w-4xl">
+                  <SignupForm />
+                </div>
+              </div>
+            </Suspense>
+          }
+        />
+      </Routes>
     </>
   );
 }
